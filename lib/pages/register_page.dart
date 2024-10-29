@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moodku/pages/home_page.dart';
 import 'package:moodku/services/auth/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  void register(BuildContext context) {
+  void register(BuildContext context) async {
     // get firebase auth service
     final auth = AuthService();
 
@@ -24,8 +25,13 @@ class _RegisterPageState extends State<RegisterPage> {
     if (passwordController.text == confirmPasswordController.text) {
       // try make an account
       try {
-        auth.registerWithEmailandPassword(
+        await auth.registerWithEmailandPassword(
             usernameController.text, passwordController.text, context);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+          (route) => false,
+        );
       } catch (e) {
         // throw an error if something happened
         showDialog(
@@ -87,6 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 20,
               ),
               TextField(
+                obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
@@ -107,6 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 20,
               ),
               TextField(
+                obscureText: true,
                 controller: confirmPasswordController,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:moodku/pages/showdialog_pairing.dart';
+import 'package:moodku/pages/showdialog.dart';
 import 'package:moodku/services/auth/auth_service.dart';
 
 class SettingPage extends StatefulWidget {
@@ -28,7 +28,6 @@ class _SettingPageState extends State<SettingPage> {
         child: Column(
           children: <Widget>[
             Expanded(
-              // Use Expanded to fill the remaining space
               child: ListView(
                 scrollDirection: Axis.vertical,
                 children: [
@@ -65,10 +64,8 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      unpairing();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Unpairing success")),
-                      );
+                      showDialogConfirmation(
+                          context, "Sure Wannar Unpair?", unpairing);
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 50),

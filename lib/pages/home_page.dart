@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:moodku/pages/debug_page.dart';
 import 'package:moodku/pages/mood_picker.dart';
-import 'package:moodku/pages/showdialog_pairing.dart';
+import 'package:moodku/pages/showdialog.dart';
 
 import 'package:moodku/services/auth/auth_service.dart';
 
@@ -175,20 +174,9 @@ class _HomePageState extends State<HomePage> {
                       child: ListTile(
                         title: Text("LOGOUT"),
                         leading: Icon(Icons.logout, size: 32),
-                        onTap: logout,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: ListTile(
-                        title: Text("DEBUG"),
-                        leading: Icon(Icons.logout, size: 32),
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DebugPage()),
-                          );
+                          showDialogConfirmation(
+                              context, "Sure Wanna Log Out?", logout);
                         },
                       ),
                     ),
@@ -312,7 +300,8 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 30),
                     GestureDetector(
                       onTap: () {
-                        logout();
+                        showDialogConfirmation(
+                            context, "Sure Wanna Log Out?", logout);
                       },
                       child: Container(
                         padding:

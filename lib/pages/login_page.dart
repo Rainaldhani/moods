@@ -22,10 +22,13 @@ class _LoginPageState extends State<LoginPage> {
     // try login
     try {
       await authService.signInWithEmailPassword(
-          usernameController.text, passwordController.text);
-      Navigator.pushReplacement(
+        usernameController.text,
+        passwordController.text,
+      );
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
+        (route) => false,
       );
     } catch (e) {
       showDialog(
@@ -78,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               TextField(
+                obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(

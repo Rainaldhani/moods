@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:moodku/pages/home_page.dart';
 
 TextEditingController pairedUid = TextEditingController();
 
@@ -76,10 +75,6 @@ Future<void> pairing(context) async {
           'user2': partnerUID,
           'time': DateTime.now(),
         });
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
       }
     }
   } else {
@@ -124,4 +119,46 @@ Future<void> showDialogPairing(BuildContext context) async {
       );
     },
   );
+}
+
+showDialogConfirmation(BuildContext context, textContent, tapContent) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              textContent,
+              style: TextStyle(color: Colors.black87, fontSize: 20),
+            ),
+          ),
+          titlePadding: EdgeInsets.symmetric(horizontal: 50, vertical: 35),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    tapContent();
+                  },
+                  child: Text(
+                    "OK",
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text(
+                    "NO",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  style:
+                      TextButton.styleFrom(backgroundColor: Colors.deepOrange),
+                ),
+              ],
+            )
+          ],
+        );
+      });
 }

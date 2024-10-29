@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:moodku/pages/showdialog.dart';
+
 import 'package:moodku/services/auth/auth_service.dart';
 import 'package:moodku/services/auth/get_data_from_database.dart';
+import 'package:moodku/services/auth/login_or_register.dart';
 
 class DebugPage extends StatefulWidget {
   const DebugPage({super.key});
@@ -45,6 +48,20 @@ class _DebugPageState extends State<DebugPage> {
     });
   }
 
+  void logout() {
+    final auth = AuthService();
+    auth.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginOrRegister()),
+    );
+  }
+
+  void unpair() {
+    final auth = AuthService();
+    auth.unpair(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +80,39 @@ class _DebugPageState extends State<DebugPage> {
             SizedBox(height: 30),
             Text("Friend UID: $friendUid"),
             SizedBox(height: 30),
-            Image.asset(moodImg),
+            GestureDetector(
+              onTap: () {
+                showDialogConfirmation(context, "Sure Wanna LOG OUT?", logout);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 242, 173, 36),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Text(
+                  "Log Out",
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 16, fontFamily: 'Lexend'),
+                ),
+              ),
+            ),
+            SizedBox(height: 30),
+            GestureDetector(
+              onTap: () {
+                showDialogConfirmation(context, "Sure Wanna Unpair?", unpair);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 242, 173, 36),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Text(
+                  "Unpair",
+                  style: TextStyle(
+                      color: Colors.black, fontSize: 16, fontFamily: 'Lexend'),
+                ),
+              ),
+            ),
           ],
         ),
       ),
